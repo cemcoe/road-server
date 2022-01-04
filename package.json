@@ -1,0 +1,25 @@
+{
+  "name": "bookbox-web-server",
+  "version": "0.0.1",
+  "description": "bookbox web client api server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cemcoe/bookbox-web-server.git"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "cemcoe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cemcoe/bookbox-web-server/issues"
+  },
+  "homepage": "https://github.com/cemcoe/bookbox-web-server#readme",
+  "dependencies": {
+    "koa": "^2.13.4"
+  }
+}
