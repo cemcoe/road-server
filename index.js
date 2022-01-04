@@ -1,11 +1,12 @@
 const Koa = require('koa');
 const app = new Koa();
-const Router = require('koa-router');
-var router = new Router();
+// const Router = require('koa-router');
+// var router = new Router();
+const router = require('./routes')
 
-router.get('/', (ctx, next) => {
-  ctx.body = '/';
-});
+// router.get('/', (ctx, next) => {
+//   ctx.body = '/';
+// });
 
 const mysql = require('mysql')
 const connection = mysql.createConnection({
