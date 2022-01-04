@@ -1,8 +1,16 @@
 const Koa = require('koa');
 const app = new Koa();
+const Router = require('koa-router');
+var router = new Router();
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
+router.get('/', (ctx, next) => {
+  ctx.body = '/';
 });
 
-app.listen(3000);
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000")
+});
