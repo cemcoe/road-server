@@ -28,6 +28,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        source: "/"
+        source: ""
         target: "/root/workplace/bookbox-web-server/"
         strip_components: 1
