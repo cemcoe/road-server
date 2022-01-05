@@ -31,3 +31,13 @@ jobs:
         source: "."
         target: "/root/workplace/bookbox-web-server/"
         strip_components: 1
+    - name:  pm2 restart index
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          whoami
+          pm2 restart index.js
