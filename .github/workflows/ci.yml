@@ -39,6 +39,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          pwd
-          cd bookbox-web-server
+          cd /root/workplace/bookbox-web-server/
           pm2 restart index.js
