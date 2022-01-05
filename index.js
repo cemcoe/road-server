@@ -3,18 +3,14 @@ const app = new Koa();
 // const Router = require('koa-router');
 // var router = new Router();
 const router = require('./routes')
+const {PORT, sqlConnectionStr} = require('./config')
 
 // router.get('/', (ctx, next) => {
 //   ctx.body = '/';
 // });
 
 const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: '127.0.0.1',   // 数据库地址
-  user: 'root',    // 数据库用户
-  password: '123456',  // 数据库密码
-  database: 'bookbox'  // 选中数据库
-})
+const connection = mysql.createConnection(sqlConnectionStr)
 
 // 执行sql脚本对数据库进行读写 
 connection.query('SELECT * FROM user', (error, results, fields) => {
@@ -31,6 +27,8 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000")
+// const PORT = 3001
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`)
 });
