@@ -10,7 +10,7 @@ router.get('/', (ctx) => {
 router.get('/users', getUsersList)
 
 // 用户登录
-router.get('/users', (ctx) => {
+router.get('/login', (ctx) => {
   ctx.body = '用户登录'
 })
 
