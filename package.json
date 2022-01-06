@@ -21,6 +21,7 @@
   "homepage": "https://github.com/cemcoe/bookbox-web-server#readme",
   "dependencies": {
     "koa": "^2.13.4",
+    "koa-jwt": "^4.0.3",
     "koa-router": "^10.1.1",
     "mysql": "^2.18.1"
   }

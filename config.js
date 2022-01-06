@@ -7,8 +7,11 @@ const sqlConnectionStr = {
   database: 'bookbox'  // 选中数据库
 }
 
+const secret = '1111' // jwt 密钥
+
 
 module.exports = {
   PORT,
   sqlConnectionStr,
+  secret,
 }
