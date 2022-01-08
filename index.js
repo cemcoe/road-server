@@ -1,5 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
+// 解析post body
+const koaBody = require('koa-body');
 // const Router = require('koa-router');
 // var router = new Router();
 const router = require('./routes')
@@ -32,6 +34,9 @@ app.use(async (ctx, next) => {
     };
   }
 });
+
+// 放在router前面
+app.use(koaBody({}));
 
 app
   .use(router.routes())

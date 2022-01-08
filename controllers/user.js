@@ -8,25 +8,29 @@ const getUsersList = (ctx) => {
 };
 
 const login = async (ctx) => {
-
+  console.log(ctx.request.body)
   // TODO: 从请求体中取出用户名校验用户名和密码
-  const statement = `SELECT * FROM user WHERE id=1`
+  // 借助 koa-body 解析body参数
+  const { name, password } = ctx.request.body
+  const statement = `SELECT * FROM user WHERE name='${name}' AND password='${password}'`
   const result = await runSqlStatement(statement)
+  console.log(result)
 
-  if(!result.length) {
+  if (!result.length) {
     // TODO: 更加友好的返回码，该用户不存在，密码错误
+    // 没有匹配到对应的用户名和密码
     ctx.body = {
       status: 401,
     }
-    return 
+    return
   }
-  const { id, name } = result[0]
+  const { id } = result[0]
   // console.log(id, name, result)
   const token = jsonwebtoken.sign({ id, name }, secret, { expiresIn: '1d' })
-
   // console.log(result, 'async')
   // 登录成功返回token
   ctx.body = {
+    // 匹配到了对应的用户名和密码
     status: 200,
     data: {
       token,

@@ -13,7 +13,7 @@ router.get('/', (ctx) => {
 router.get('/v1/users', getUsersList)
 
 // 用户登录
-router.get('/v1/login', login)
+router.post('/v1/login', login)
 
 const auth = jwt({ secret })
 // 获取登录用户信息
