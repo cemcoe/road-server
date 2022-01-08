@@ -3,8 +3,20 @@ const jsonwebtoken = require('jsonwebtoken')
 const { secret } = require('../config')
 
 // 获取用户列表
-const getUsersList = (ctx) => {
-  ctx.body = '获取用户列表'
+const getUsersList = async (ctx) => {
+
+  // 查询用户列表
+  const statement = `SELECT * FROM user`
+  const result = await runSqlStatement(statement)
+  console.log(result)
+  
+  ctx.body = {
+    status: 200,
+    data: {
+      users: result
+    }
+    
+  }
 };
 
 const login = async (ctx) => {
