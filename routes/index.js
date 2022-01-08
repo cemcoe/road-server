@@ -3,7 +3,7 @@ const router = new Router()
 const jwt = require('koa-jwt')
 
 const { secret } = require('../config')
-const { getUsersList, login } = require('../controllers/user.js')
+const { getUsersList, login, getOwnerInfo } = require('../controllers/user.js')
 
 router.get('/', (ctx) => {
   ctx.body = '欢迎使用书盒api'
@@ -17,14 +17,6 @@ router.post('/v1/login', login)
 
 const auth = jwt({ secret })
 // 获取登录用户信息
-router.get('/v1/user', auth, (ctx) => {
-  // 拿到登录用户的id
-  console.log(ctx.state)
-  ctx.body = {
-    data: {
-      ...ctx.state
-    }
-  }
-})
+router.get('/v1/owner', auth, getOwnerInfo)
 
 module.exports = router

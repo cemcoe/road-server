@@ -38,8 +38,36 @@ const login = async (ctx) => {
   }
 }
 
+const getOwnerInfo = async (ctx) => {
+  // 拿到登录用户的id
+  // console.log(ctx.state, 'state')
+
+  const { id } = ctx.state.user
+  // 查数据库找用户详细信息
+
+  const statement = `SELECT * FROM user WHERE id='${id}'`
+  const result = await runSqlStatement(statement)
+
+  if (!result.length) {
+    // TODO: 更加友好的返回码，该用户不存在，密码错误
+    // 没有匹配到对应的用户名和密码
+    ctx.body = {
+      status: 401,
+    }
+    return
+  }
+
+  ctx.body = {
+    status: 200,
+    data: {
+      ...result[0]
+    }
+  }
+}
+
 module.exports = {
   getUsersList,
   login,
+  getOwnerInfo
 }
 
