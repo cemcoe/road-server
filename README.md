@@ -19,3 +19,8 @@ bookbox api 服务
 7. 状态码 GET api.cemcoe.com/v1/users?page=2&per_page=100 200
 8. 错误处理 返回的信息中将error作为键名，出错信息作为键值
 9. 服务器返回的数据格式，应该尽量使用JSON
+
+
+用到的服务
+- koa-body 解析 request body
+- [rest-client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) 在vscode中测试接口
