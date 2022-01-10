@@ -37,3 +37,9 @@ content-type: application/json
 {
   "content": "dddd"
 }
+
+###
+
+# 获取文章列表
+GET {{host}}/v1/posts
+content-type: application/json

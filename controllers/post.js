@@ -24,8 +24,27 @@ const createPost = async (ctx) => {
   }
 }
 
+// 获取文章列表
+const getPostList = async (ctx) => {
+  const statement = `SELECT * FROM post`
+  const result = await runSqlStatement(statement)
+  // console.log(result)
+  // TODO: 连表查询将用户id对应到用户名
+  if (result) {
+    ctx.body = {
+      status: 200,
+      data: {
+        postList: result
+      }
+    }
+  }
+
+
+}
+
 
 module.exports = {
   createPost,
+  getPostList,
 }
 
