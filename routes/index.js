@@ -4,6 +4,7 @@ const jwt = require('koa-jwt')
 
 const { secret } = require('../config')
 const { getUsersList, login, getOwnerInfo } = require('../controllers/user.js')
+const { createPost } = require('../controllers/post.js')
 
 router.get('/', (ctx) => {
   ctx.body = '欢迎使用书盒api'
@@ -18,5 +19,8 @@ router.post('/v1/login', login)
 const auth = jwt({ secret })
 // 获取登录用户信息
 router.get('/v1/owner', auth, getOwnerInfo)
+
+// 创建新文章
+router.post('/v1/post', auth, createPost)
 
 module.exports = router

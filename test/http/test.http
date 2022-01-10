@@ -1,7 +1,7 @@
 
 # @host = https://api.cemcoe.com
 @host = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImhlbGxvIiwiaWF0IjoxNjQxNjM2ODYyLCJleHAiOjE2NDE3MjMyNjJ9.ICkre3I1h5wHv2jvhfTzK5K8IjBj92NylWIMlGiGAvc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImNlbWNvZSIsImlhdCI6MTY0MTgyNTM5MCwiZXhwIjoxNjQxOTExNzkwfQ.bwTWv29xwwuk2pqCs0smKziUtYvgWJy0DHZsK2f62_U
 # api index
 GET {{host}}/
 
@@ -17,7 +17,7 @@ POST {{host}}/v1/login
 content-type: application/json
 
 {
-  "name": "hello",
+  "name": "cemcoe",
   "password": "1234"
 }
 
@@ -28,3 +28,12 @@ GET {{host}}/v1/owner
 Authorization: Bearer {{token}}
 
 ###
+
+# 创建文章
+POST {{host}}/v1/post
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+  "content": "dddd"
+}
