@@ -9,13 +9,13 @@ const getUsersList = async (ctx) => {
   const statement = `SELECT * FROM user`
   const result = await runSqlStatement(statement)
   console.log(result)
-  
+
   ctx.body = {
     status: 200,
     data: {
       users: result
     }
-    
+
   }
 };
 
@@ -77,9 +77,36 @@ const getOwnerInfo = async (ctx) => {
   }
 }
 
+
+const getUserDetail = async (ctx) => {
+  const { uid } = ctx.params
+  const statement = `
+  SELECT id, name, avatar, gender
+  FROM user
+  WHERE id = ${uid};`
+
+  const result = await runSqlStatement(statement)
+
+  if (!result.length) {
+    ctx.body = {
+      status: 404,
+    }
+    return
+  }
+  // console.log(result)
+  ctx.body = {
+    status: 200,
+    data: {
+      user: result[0]
+    }
+  }
+}
+
+
 module.exports = {
   getUsersList,
   login,
-  getOwnerInfo
+  getOwnerInfo,
+  getUserDetail,
 }
 

@@ -3,7 +3,7 @@ const router = new Router()
 const jwt = require('koa-jwt')
 
 const { secret } = require('../config')
-const { getUsersList, login, getOwnerInfo } = require('../controllers/user.js')
+const { getUsersList, login, getOwnerInfo, getUserDetail } = require('../controllers/user.js')
 const { createPost, getPostList, getPostDetail } = require('../controllers/post.js')
 
 router.get('/', (ctx) => {
@@ -28,6 +28,11 @@ router.get('/v1/posts', getPostList)
 
 // 获取文章详情
 router.get('/v1/post/:id', getPostDetail)
+
+
+// 获取用户详情
+router.get('/v1/user/:uid', getUserDetail)
+
 
 
 module.exports = router
