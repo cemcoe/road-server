@@ -35,10 +35,15 @@ const createPost = async (ctx) => {
 
 // 获取文章列表
 const getPostList = async (ctx) => {
-  const statement = `SELECT * FROM post`
+  // 连表查询将用户id对应到用户名
+  const statement = `
+  SELECT p.id, p.authorId, u.name authorName, avatar, p.title, p.abstract
+  FROM post p
+  INNER JOIN user u
+  WHERE p.authorId = u.id;`
+
   const result = await runSqlStatement(statement)
   // console.log(result)
-  // TODO: 连表查询将用户id对应到用户名
   if (result) {
     ctx.body = {
       status: 200,
