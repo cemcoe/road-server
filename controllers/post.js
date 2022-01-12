@@ -56,9 +56,35 @@ const getPostList = async (ctx) => {
 
 }
 
+const getPostDetail = async (ctx) => {
+  const pid = ctx.params.id
+  const statement = `
+  SELECT p.id, p.authorId, u.name authorName, avatar, p.title, p.abstract, p.content
+  FROM post p
+  INNER JOIN user u
+  WHERE p.authorId = u.id AND p.id = ${pid};`
+
+  const result = await runSqlStatement(statement)
+
+  if (!result.length) {
+    ctx.body = {
+      status: 404,
+    }
+    return
+  }
+  // console.log(result)
+  ctx.body = {
+    status: 200,
+    data: {
+      post: result[0]
+    }
+  }
+}
+
 
 module.exports = {
   createPost,
   getPostList,
+  getPostDetail,
 }
 
