@@ -102,11 +102,37 @@ const getUserDetail = async (ctx) => {
   }
 }
 
+const getUserPostList = async(ctx) => {
+  const { uid } = ctx.params
+  const statement = `
+  SELECT p.id, p.title, p.abstract
+  FROM post p
+  WHERE p.authorId = ${uid};`
+
+  const result = await runSqlStatement(statement)
+
+  if (!result.length) {
+    ctx.body = {
+      status: 404,
+    }
+    return
+  }
+  // console.log(result)
+  ctx.body = {
+    status: 200,
+    data: {
+      postList: result
+    }
+  }
+
+}
+
 
 module.exports = {
   getUsersList,
   login,
   getOwnerInfo,
   getUserDetail,
+  getUserPostList,
 }
 

@@ -58,4 +58,10 @@ content-type: application/json
 
 ###
 
+# 获取指定用户文章列表
+GET {{host}}/v1/user/1/posts
+content-type: application/json
+
+###
+
 
