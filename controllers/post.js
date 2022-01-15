@@ -13,12 +13,12 @@ const createPost = async (ctx) => {
   // TODO: 生成摘要等，丰富文章信息
   const { content } = ctx.request.body
   const title = ctx.request.body.title || '默认标题'
-  const abstract = ctx.request.body.abstract || content.slice(0, 20)
+  const abstract = ctx.request.body.abstract || content.slice(0, 100)
 
   // 根据内容生成摘要
   // const abstract = content.slice(0, 20)
 
-  const statement = `INSERT INTO post(title, authorId, content, abstract) VALUES('${title}', '${id}', '${content}', '${abstract}');`
+  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', '${content}', '${abstract}', now());`
   const result = await runSqlStatement(statement)
   // console.log('--', result.insertId, '--')
 
