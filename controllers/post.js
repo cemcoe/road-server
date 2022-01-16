@@ -1,4 +1,5 @@
 const { runSqlStatement } = require('../mysql/index.js')
+const mysql = require('mysql')
 
 const createPost = async (ctx) => {
   // console.log(ctx.request.body)
@@ -18,9 +19,11 @@ const createPost = async (ctx) => {
   // 根据内容生成摘要
   // const abstract = content.slice(0, 20)
 
-  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', '${content}', '${abstract}', now());`
+  const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
+
+  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', now());`
   const result = await runSqlStatement(statement)
-  // console.log('--', result.insertId, '--')
+  console.log('--', result, '--')
 
   if (result) {
     const { insertId } = result
