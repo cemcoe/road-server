@@ -40,6 +40,17 @@ content-type: application/json
 
 ###
 
+# 更新文章
+PUT {{host}}/v1/post/1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+  "content": "。dshdkfjlfshjgllfsljfsjdl"
+}
+
+###
+
 # 获取文章列表
 GET {{host}}/v1/posts
 content-type: application/json

@@ -11,7 +11,7 @@ const {
   getUserPostList,
 } = require('../controllers/user.js')
 
-const { createPost, getPostList, getPostDetail } = require('../controllers/post.js')
+const { createPost, getPostList, getPostDetail, updatePost } = require('../controllers/post.js')
 
 router.get('/', (ctx) => {
   ctx.body = '欢迎使用书盒api'
@@ -27,8 +27,12 @@ const auth = jwt({ secret })
 // 获取登录用户信息
 router.get('/v1/owner', auth, getOwnerInfo)
 
+// ------文章相关------
 // 创建新文章
 router.post('/v1/post', auth, createPost)
+
+// 更新文章
+router.put('/v1/post/:pid', updatePost)
 
 // 获取文章列表
 router.get('/v1/posts', getPostList)
