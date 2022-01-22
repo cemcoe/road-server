@@ -46,7 +46,8 @@ Authorization: Bearer {{token}}
 content-type: application/json
 
 {
-  "content": "。dshdkfjlfshjgllfsljfsjdl"
+  "title": "可选",
+  "content": "可选"
 }
 
 ###

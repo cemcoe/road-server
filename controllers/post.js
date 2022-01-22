@@ -47,28 +47,41 @@ const updatePost = async (ctx) => {
   // 上面的语法有待商榷
   // 当要提取的对象对应属性解析为 undefined，变量就被赋予默认值。前端可能传过来空字符串
   // TODO: 生成摘要等，丰富文章信息
-  const { content } = ctx.request.body
+  // const { content } = ctx.request.body
 
   // TODO: 可以随意更新可更新的字段，目前仅支持更新内容
-  const title = ctx.request.body.title || '默认标题'
-  const abstract = ctx.request.body.abstract || content.slice(0, 100)
+  // const title = ctx.request.body.title || '默认标题'
+  // const abstract = ctx.request.body.abstract || content.slice(0, 100)
+
+
+  // 可以提供可选择的参数
+  // TODO: 抽一下，注意一下安全，有些字段是不能修改的，抽空换成orm
+  let demo = ''
+  Object.keys(ctx.request.body).forEach(key => {
+    const mysqlContent = mysql.escape(`${ctx.request.body[key]}`) // 转义特殊字符，插入数据库
+
+    // TODO: 摘要等需要单独处理
+    demo = demo + `${key}=${mysqlContent},`
+  });
+
+  // console.log(demo, 'demo')
 
   // 根据内容生成摘要
   // const abstract = content.slice(0, 20)
 
-  const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
+  // const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
 
-  const statement = `UPDATE post SET content=${mysqlContent} WHERE id=${pid};`
+  const statement = `UPDATE post SET ${demo.slice(0, -1)} WHERE id=${pid};`
   console.log(statement, 'state')
   const result = await runSqlStatement(statement)
   console.log('--', result, '--')
 
   if (result) {
-    const {changedRows} = result
+    const { insertId } = result
     ctx.body = {
       status: 200,
       data: {
-        changedRows,
+        insertId,
       }
     }
   }
