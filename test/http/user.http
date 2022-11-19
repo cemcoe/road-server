@@ -1,0 +1,90 @@
+
+# @host = https://api.cemcoe.com
+@host = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImNlbWNvZSIsImlhdCI6MTY0MTk1Njg1OCwiZXhwIjoxNjQyMDQzMjU4fQ.CLBk6unAkthReGaa-DDZkG0lNKwMC6RcAl9ioK_-Tfk
+# api index
+GET {{host}}/
+
+###
+
+# 1. 用户注册
+POST {{host}}/v1/user
+content-type: application/json
+
+{
+  "name": "cemcoe",
+  "password": "1234"
+}
+
+###
+
+# 获取用户列表
+GET {{host}}/v1/users
+
+###
+
+# 用户登录
+POST {{host}}/v1/login
+content-type: application/json
+
+{
+  "name": "cemcoe",
+  "password": "1234"
+}
+
+###
+
+# 获取登录用户信息
+GET {{host}}/v1/owner
+Authorization: Bearer {{token}}
+
+###
+
+# 创建文章
+POST {{host}}/v1/post
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+  "content": "苯（Benzene），是一种有机化合物，是最简单的芳烃，化学式是C6H6，在常温下是甜味、可燃、有致癌毒性的无色透明液体，并带有强烈的芳香气味。 它难溶于水，易溶于有机溶剂，本身也可作为有机溶剂。 苯具有的环系叫苯环，苯环去掉一个氢原子以后的结构叫苯基，用Ph表示，因此苯的化学式也可写作PhH。"
+}
+
+###
+
+# 更新文章
+PUT {{host}}/v1/post/1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+  "title": "可选",
+  "content": "可选"
+}
+
+###
+
+# 获取文章列表
+GET {{host}}/v1/posts
+content-type: application/json
+
+###
+
+# 获取文章详细内容
+GET {{host}}/v1/post/1
+content-type: application/json
+
+###
+
+# 获取用户详情
+GET {{host}}/v1/user/1
+content-type: application/json
+
+###
+
+# 获取指定用户文章列表
+GET {{host}}/v1/user/1/posts
+content-type: application/json
+
+###
+
+

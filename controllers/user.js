@@ -3,23 +3,35 @@ const jsonwebtoken = require("jsonwebtoken");
 const { secret } = require("../config");
 
 // 用户注册
-const create = (ctx) => {
+const create = async (ctx) => {
   const { name, password } = ctx.request.body;
-  console.log("create");
 
-  ctx.body = {
-    status: 200,
-    user: {
-      name,
-      password,
-    },
-  };
+  const statement = `SELECT * FROM user WHERE name='${name}'`;
+
+  try {
+    const result = await runSqlStatement(statement);
+    console.log(result, "result");
+
+    ctx.body = {
+      status: 200,
+      user: {
+        name,
+        password,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    ctx.body = {
+      status: 500,
+      msg: "数据库错误",
+    };
+  }
 };
 
 // 获取用户列表
 const getUsersList = async (ctx) => {
   // 查询用户列表
-  const statement = `SELECT * FROM user`;
+  const statement = `SELECT * FROM users`;
   const result = await runSqlStatement(statement);
   console.log(result);
 
