@@ -6,20 +6,29 @@ const { secret } = require("../config");
 const create = async (ctx) => {
   const { name, password } = ctx.request.body;
 
-  const statement = `SELECT * FROM user WHERE name='${name}'`;
+  const statement = `SELECT * FROM users WHERE name='${name}'`;
 
   try {
     const result = await runSqlStatement(statement);
-    console.log(result, "result");
 
-    ctx.body = {
-      status: 200,
-      user: {
-        name,
-        password,
-      },
-    };
+    const isCreated = Boolean(result.length);
+
+    if (isCreated) {
+      ctx.body = {
+        status: 2001,
+        mag: "抱歉，该用户名已经被注册",
+      };
+    } else {
+      ctx.body = {
+        status: 200,
+        user: {
+          name,
+          password,
+        },
+      };
+    }
   } catch (error) {
+    // TODO: 中间件处理
     console.log(error);
     ctx.body = {
       status: 500,

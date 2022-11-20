@@ -13,9 +13,15 @@ const runSqlStatement = (statement) => {
 
       if (error) {
         console.log("MySQL ERROR:", error);
+
+        // TODO: 中间件处理
         reject(error);
       } else {
-        console.log(results, "results");
+        if (results.length === 0) {
+          // 数据库中没有响应的数据
+          // TODO: 中间件处理
+        }
+
         resolve(results);
       }
     });
