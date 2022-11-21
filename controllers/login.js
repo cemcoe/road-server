@@ -3,7 +3,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const { secret } = require("../config");
 
 // 用户注册
-const create = async (ctx) => {
+async function create(ctx) {
   const { name, password } = ctx.request.body;
 
   const statement = `SELECT * FROM users WHERE name='${name}'`;
@@ -45,10 +45,10 @@ const create = async (ctx) => {
       msg: "数据库错误",
     };
   }
-};
+}
 
 // 用户登录
-const login = async (ctx) => {
+async function login(ctx) {
   console.log(ctx.request.body);
   // TODO: 从请求体中取出用户名校验用户名和密码
   // 借助 koa-body 解析body参数
@@ -77,10 +77,10 @@ const login = async (ctx) => {
       token,
     },
   };
-};
+}
 
 // 获取登录用户信息
-const getOwnerInfo = async (ctx) => {
+async function getOwnerInfo(ctx) {
   // 拿到登录用户的id
   // console.log(ctx.state, 'state')
 
@@ -107,25 +107,10 @@ const getOwnerInfo = async (ctx) => {
       },
     },
   };
-};
-
-// 获取用户列表
-const getUsersList = async (ctx) => {
-  const statement = `SELECT * FROM users`;
-  const result = await runSqlStatement(statement);
-  console.log(result);
-
-  ctx.body = {
-    status: 200,
-    data: {
-      users: result,
-    },
-  };
-};
+}
 
 module.exports = {
   create,
   login,
   getOwnerInfo,
-  getUsersList,
 };
