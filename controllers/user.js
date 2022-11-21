@@ -18,8 +18,8 @@ const getUsersList = async (ctx) => {
 const getUserDetail = async (ctx) => {
   const { uid } = ctx.params;
   const statement = `
-  SELECT id, name, avatar, gender
-  FROM user
+  SELECT *
+  FROM users
   WHERE id = ${uid};`;
 
   const result = await runSqlStatement(statement);
@@ -43,8 +43,8 @@ const getUserPostList = async (ctx) => {
   const { uid } = ctx.params;
   const statement = `
   SELECT p.id, p.title, p.abstract
-  FROM post p
-  WHERE p.authorId = ${uid};`;
+  FROM posts p
+  WHERE p.author_id = ${uid};`;
 
   const result = await runSqlStatement(statement);
 
