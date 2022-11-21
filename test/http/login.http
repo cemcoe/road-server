@@ -1,0 +1,39 @@
+
+# @host = https://api.cemcoe.com
+@host = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA4LCJuYW1lIjoiZGVtbzExIiwiaWF0IjoxNjY4OTk2ODcyLCJleHAiOjE2NjkwODMyNzJ9.iHtJtk0KMZu6_f9khFIVU7mkvdeW2tDoxJ08_IldrNY
+# api index
+GET {{host}}/
+
+###
+
+# 1. 用户注册
+POST {{host}}/v1/user
+content-type: application/json
+
+{
+  "name": "demo11",
+  "password": "1234"
+}
+
+
+###
+
+# 2. 用户登录
+POST {{host}}/v1/login
+content-type: application/json
+
+{
+  "name": "demo11",
+  "password": "1234"
+}
+
+###
+
+# 3. 获取登录用户信息
+GET {{host}}/v1/owner
+Authorization: Bearer {{token}}
+
+###
+
+
