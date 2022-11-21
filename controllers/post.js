@@ -134,7 +134,7 @@ const getPostList = async (ctx) => {
 
     const { id, title, abstract, created_at } = item;
     const post = {
-      id,
+      id: String(id),
       title,
       abstract,
       created_at,
