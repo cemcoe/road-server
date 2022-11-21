@@ -1,36 +1,32 @@
-
-# @host = https://api.cemcoe.com
-@host = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA4LCJuYW1lIjoiZGVtbzExIiwiaWF0IjoxNjY4OTk2ODcyLCJleHAiOjE2NjkwODMyNzJ9.iHtJtk0KMZu6_f9khFIVU7mkvdeW2tDoxJ08_IldrNY
-# api index
-GET {{host}}/
+# settings.json
+# make sure choose Environment
 
 ###
 
-# 1. 用户注册
+# 1. user register
 POST {{host}}/v1/user
 content-type: application/json
 
 {
-  "name": "demo11",
+  "name": "demo111",
   "password": "1234"
 }
 
 
 ###
 
-# 2. 用户登录
+# 2. user login
 POST {{host}}/v1/login
 content-type: application/json
 
 {
-  "name": "demo11",
+  "name": "demo111",
   "password": "1234"
 }
 
 ###
 
-# 3. 获取登录用户信息
+# 3. get login user info by token
 GET {{host}}/v1/owner
 Authorization: Bearer {{token}}
 
