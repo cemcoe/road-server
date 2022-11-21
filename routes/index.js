@@ -23,7 +23,7 @@ router.get("/", (ctx) => {
 });
 
 // 用户注册
-router.post("/v1/user", create);
+router.post("/v1/users", create);
 // 用户登录
 router.post("/v1/login", login);
 const auth = jwt({ secret });
@@ -37,21 +37,21 @@ router.get("/v1/users", getUsersList);
 
 // ------文章相关------
 // 创建新文章
-router.post("/v1/post", auth, createPost);
+router.post("/v1/posts", auth, createPost);
 
 // 更新文章
-router.put("/v1/post/:pid", updatePost);
+router.put("/v1/posts/:pid", updatePost);
 
 // 获取文章列表
 router.get("/v1/posts", getPostList);
 
 // 获取文章详情
-router.get("/v1/post/:id", getPostDetail);
+router.get("/v1/posts/:id", getPostDetail);
 
 // 获取用户详情
-router.get("/v1/user/:uid", getUserDetail);
+router.get("/v1/users/:uid", getUserDetail);
 
 // 获取用户文章列表
-router.get("/v1/user/:uid/posts", getUserPostList);
+router.get("/v1/users/:uid/posts", getUserPostList);
 
 module.exports = router;
