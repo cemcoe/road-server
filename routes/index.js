@@ -19,7 +19,7 @@ const {
 } = require("../controllers/post.js");
 
 router.get("/", (ctx) => {
-  ctx.body = "欢迎使用书盒api";
+  ctx.body = "Welcome use xbook api!";
 });
 
 // 用户注册
