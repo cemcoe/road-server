@@ -21,7 +21,7 @@ const createPost = async (ctx) => {
 
   const mysqlContent = mysql.escape(`${content}`); // 转义特殊字符，插入数据库
 
-  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', now());`;
+  const statement = `INSERT INTO posts(title, author_id, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', CURRENT_TIMESTAMP());`;
   const result = await runSqlStatement(statement);
   console.log("--", result, "--");
 
@@ -153,12 +153,28 @@ const getPostList = async (ctx) => {
 const getPostDetail = async (ctx) => {
   const pid = ctx.params.id;
   const statement = `
-  SELECT p.id, p.authorId, u.name authorName, avatar, p.title, p.abstract, p.content
-  FROM post p
-  INNER JOIN user u
-  WHERE p.authorId = u.id AND p.id = ${pid};`;
+  SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.content
+  FROM posts p
+  INNER JOIN users u
+  WHERE p.author_id = u.id AND p.id = ${pid};`;
 
-  const result = await runSqlStatement(statement);
+  const post = await runSqlStatement(statement);
+
+  const result = post.map((item) => {
+    const { id, title, content } = item;
+    const { name, avatar } = item;
+
+    return {
+      id,
+      title,
+      content,
+      author: {
+        id,
+        name,
+        avatar,
+      },
+    };
+  });
 
   if (!result.length) {
     ctx.body = {
