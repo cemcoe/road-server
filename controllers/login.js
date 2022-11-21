@@ -75,6 +75,7 @@ async function login(ctx) {
     status: 200,
     data: {
       token,
+      user: result[0],
     },
   };
 }
