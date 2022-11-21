@@ -112,7 +112,7 @@ const getPostList = async (ctx) => {
 
   // 连表查询将用户id对应到用户名
   const statement = `
-  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, u.name, u.avatar
+  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id 
@@ -132,17 +132,18 @@ const getPostList = async (ctx) => {
       avatar,
     };
 
-    const { id, title, abstract, created_at } = item;
+    const { id, title, abstract, created_at, updated_at } = item;
     const post = {
       id,
       title,
       abstract,
-      created_at,
       commentcount: 0,
       viewcount: 0,
       imgsLink: [],
       status: 0,
       wordcount: 0,
+      created_at,
+      updated_at,
     };
 
     return {
