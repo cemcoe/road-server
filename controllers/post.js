@@ -1,5 +1,5 @@
-const { runSqlStatement } = require('../mysql/index.js')
-const mysql = require('mysql')
+const { runSqlStatement } = require("../mysql/index.js");
+const mysql = require("mysql");
 
 const createPost = async (ctx) => {
   // console.log(ctx.request.body)
@@ -7,34 +7,34 @@ const createPost = async (ctx) => {
   // 借助 koa-body 解析body参数
 
   // 拿到登录用户的id
-  const { id } = ctx.state.user
+  const { id } = ctx.state.user;
   // const { title = '默认标题', abstract, content } = ctx.request.body
   // 上面的语法有待商榷
   // 当要提取的对象对应属性解析为 undefined，变量就被赋予默认值。前端可能传过来空字符串
   // TODO: 生成摘要等，丰富文章信息
-  const { content } = ctx.request.body
-  const title = ctx.request.body.title || '默认标题'
-  const abstract = ctx.request.body.abstract || content.slice(0, 100)
+  const { content } = ctx.request.body;
+  const title = ctx.request.body.title || "默认标题";
+  const abstract = ctx.request.body.abstract || content.slice(0, 100);
 
   // 根据内容生成摘要
   // const abstract = content.slice(0, 20)
 
-  const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
+  const mysqlContent = mysql.escape(`${content}`); // 转义特殊字符，插入数据库
 
-  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', now());`
-  const result = await runSqlStatement(statement)
-  console.log('--', result, '--')
+  const statement = `INSERT INTO post(title, authorId, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', now());`;
+  const result = await runSqlStatement(statement);
+  console.log("--", result, "--");
 
   if (result) {
-    const { insertId } = result
+    const { insertId } = result;
     ctx.body = {
       status: 200,
       data: {
         insertId,
-      }
-    }
+      },
+    };
   }
-}
+};
 
 // 更新文章
 const updatePost = async (ctx) => {
@@ -42,7 +42,7 @@ const updatePost = async (ctx) => {
 
   // TODO: 拿到登录用户的id，判断登录用户id和文章对应的作者id是否一致
   // const { id } = ctx.state.user
-  const { pid } = ctx.params
+  const { pid } = ctx.params;
   // const { title = '默认标题', abstract, content } = ctx.request.body
   // 上面的语法有待商榷
   // 当要提取的对象对应属性解析为 undefined，变量就被赋予默认值。前端可能传过来空字符串
@@ -53,15 +53,14 @@ const updatePost = async (ctx) => {
   // const title = ctx.request.body.title || '默认标题'
   // const abstract = ctx.request.body.abstract || content.slice(0, 100)
 
-
   // 可以提供可选择的参数
   // TODO: 抽一下，注意一下安全，有些字段是不能修改的，抽空换成orm
-  let demo = ''
-  Object.keys(ctx.request.body).forEach(key => {
-    const mysqlContent = mysql.escape(`${ctx.request.body[key]}`) // 转义特殊字符，插入数据库
+  let demo = "";
+  Object.keys(ctx.request.body).forEach((key) => {
+    const mysqlContent = mysql.escape(`${ctx.request.body[key]}`); // 转义特殊字符，插入数据库
 
     // TODO: 摘要等需要单独处理
-    demo = demo + `${key}=${mysqlContent},`
+    demo = demo + `${key}=${mysqlContent},`;
   });
 
   // console.log(demo, 'demo')
@@ -71,75 +70,114 @@ const updatePost = async (ctx) => {
 
   // const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
 
-  const statement = `UPDATE post SET ${demo.slice(0, -1)} WHERE id=${pid};`
-  console.log(statement, 'state')
-  const result = await runSqlStatement(statement)
-  console.log('--', result, '--')
+  const statement = `UPDATE post SET ${demo.slice(0, -1)} WHERE id=${pid};`;
+  console.log(statement, "state");
+  const result = await runSqlStatement(statement);
+  console.log("--", result, "--");
 
   if (result) {
-    const { insertId } = result
+    const { insertId } = result;
     ctx.body = {
       status: 200,
       data: {
         insertId,
-      }
-    }
+      },
+    };
   }
-}
+};
 
 // 获取文章列表
 const getPostList = async (ctx) => {
+  // 默认每页展示10篇文章
+  // 可以提供参数每页多少个以及页数以及关键字
+
+  // -- DQL5.分页查询
+  // -- select 字段1，字段2... from 表明 limit m,n
+  // -- m: 整数，表示从第几条索引开始，计算方式 （当前页-1）*每页显示条数
+  // -- n: 整数，表示查询多少条数据
+  // select * from keywords limit 0, 2;
+  const { per_page = 10 } = ctx.query;
+
+  const page = Math.max(ctx.query.page * 1, 1);
+  const perPage = Math.max(per_page * 1, 1);
+
+  const n = perPage;
+  const m = (page - 1) * n;
+
   // 连表查询将用户id对应到用户名
   const statement = `
-  SELECT p.id, p.authorId, u.name authorName, avatar, p.title, p.abstract
-  FROM post p
-  INNER JOIN user u
-  WHERE p.authorId = u.id;`
+  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, u.name authorName, u.avatar
+  FROM posts p
+  INNER JOIN users u
+  WHERE p.author_id = u.id 
+  limit ${m}, ${n};`;
 
-  const result = await runSqlStatement(statement)
+  const posts = await runSqlStatement(statement);
   // console.log(result)
+
+  // format posts {...} => {..., author: {...}}
+  // 这个需求是不是MySQL就可以做？
+
+  const result = posts.map((item) => {
+    const { author_id, name, avatar } = item;
+    const author = {
+      id: author_id,
+      name,
+      avatar,
+    };
+
+    const { id, title, abstract, created_at } = item;
+    const post = {
+      id,
+      title,
+      abstract,
+      created_at,
+    };
+
+    return {
+      ...post,
+      author,
+    };
+  });
+
   if (result) {
     ctx.body = {
       status: 200,
       data: {
-        postList: result
-      }
-    }
+        postList: result,
+      },
+    };
   }
-
-
-}
+};
 
 const getPostDetail = async (ctx) => {
-  const pid = ctx.params.id
+  const pid = ctx.params.id;
   const statement = `
   SELECT p.id, p.authorId, u.name authorName, avatar, p.title, p.abstract, p.content
   FROM post p
   INNER JOIN user u
-  WHERE p.authorId = u.id AND p.id = ${pid};`
+  WHERE p.authorId = u.id AND p.id = ${pid};`;
 
-  const result = await runSqlStatement(statement)
+  const result = await runSqlStatement(statement);
 
   if (!result.length) {
     ctx.body = {
       status: 404,
-    }
-    return
+    };
+    return;
   }
   // console.log(result)
   ctx.body = {
     status: 200,
     data: {
-      post: result[0]
-    }
-  }
-}
-
+      post: result[0],
+    },
+  };
+};
 
 module.exports = {
   createPost,
   getPostList,
   getPostDetail,
   updatePost,
-}
-
+};

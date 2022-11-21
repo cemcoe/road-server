@@ -28,7 +28,7 @@ content-type: application/json
 ###
 
 # 获取文章列表
-GET {{host}}/v1/posts
+GET {{host}}/v1/posts?page=1&per_page=1
 content-type: application/json
 
 ###
