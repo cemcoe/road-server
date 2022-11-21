@@ -8,7 +8,7 @@ POST {{host}}/v1/user
 content-type: application/json
 
 {
-  "name": "demo111",
+  "name": "test",
   "password": "1234"
 }
 
@@ -20,7 +20,7 @@ POST {{host}}/v1/login
 content-type: application/json
 
 {
-  "name": "demo111",
+  "name": "test",
   "password": "1234"
 }
 

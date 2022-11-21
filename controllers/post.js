@@ -70,7 +70,10 @@ const updatePost = async (ctx) => {
 
   // const mysqlContent = mysql.escape(`${content}`) // 转义特殊字符，插入数据库
 
-  const statement = `UPDATE post SET ${demo.slice(0, -1)} WHERE id=${pid};`;
+  const statement = `UPDATE posts SET ${demo.slice(
+    0,
+    -1
+  )}, updated_at=CURRENT_TIMESTAMP() WHERE id=${pid};`;
   console.log(statement, "state");
   const result = await runSqlStatement(statement);
   console.log("--", result, "--");

@@ -23,12 +23,12 @@ content-type: application/json
 ###
 
 # 更新文章
-PUT {{host}}/v1/post/1
+PUT {{host}}/v1/post/107
 Authorization: Bearer {{token}}
 content-type: application/json
 
 {
-  "title": "可选",
+  "title": "111111111可选",
   "content": "可选"
 }
 
