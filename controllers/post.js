@@ -99,17 +99,20 @@ const getPostList = async (ctx) => {
   // -- m: 整数，表示从第几条索引开始，计算方式 （当前页-1）*每页显示条数
   // -- n: 整数，表示查询多少条数据
   // select * from keywords limit 0, 2;
-  const { per_page = 10 } = ctx.query;
+  // init var
 
-  const page = Math.max(ctx.query.page * 1, 1);
-  const perPage = Math.max(per_page * 1, 1);
+  let { per_page = 10 } = ctx.query;
+  let { page = 1 } = ctx.query;
 
-  const n = perPage;
+  page = Math.max(page * 1, 1);
+  per_page = Math.max(per_page * 1, 1);
+
+  const n = per_page;
   const m = (page - 1) * n;
 
   // 连表查询将用户id对应到用户名
   const statement = `
-  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, u.name authorName, u.avatar
+  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, u.name, u.avatar
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id 
