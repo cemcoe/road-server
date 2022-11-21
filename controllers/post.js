@@ -138,6 +138,11 @@ const getPostList = async (ctx) => {
       title,
       abstract,
       created_at,
+      commentcount: 0,
+      viewcount: 0,
+      imgsLink: [],
+      status: 0,
+      wordcount: 0,
     };
 
     return {
