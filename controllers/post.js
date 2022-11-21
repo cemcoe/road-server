@@ -21,7 +21,7 @@ const createPost = async (ctx) => {
 
   const mysqlContent = mysql.escape(`${content}`); // 转义特殊字符，插入数据库
 
-  const statement = `INSERT INTO posts(title, author_id, content, abstract, created_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', CURRENT_TIMESTAMP());`;
+  const statement = `INSERT INTO posts(title, author_id, content, abstract, created_at, updated_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());`;
   const result = await runSqlStatement(statement);
   console.log("--", result, "--");
 
