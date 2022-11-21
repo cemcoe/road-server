@@ -19,13 +19,23 @@ const create = async (ctx) => {
         mag: "抱歉，该用户名已经被注册",
       };
     } else {
-      ctx.body = {
-        status: 200,
-        user: {
-          name,
-          password,
-        },
-      };
+      const statement = `insert into users(name, password, created_at) values('${name}', '${password}', CURRENT_TIMESTAMP());`;
+
+      try {
+        const result = await runSqlStatement(statement);
+
+        if (result) {
+          ctx.body = {
+            status: 200,
+            msg: "注册成功",
+          };
+        }
+      } catch (error) {
+        ctx.body = {
+          status: 500,
+          msg: "数据库错误",
+        };
+      }
     }
   } catch (error) {
     // TODO: 中间件处理
@@ -57,7 +67,7 @@ const login = async (ctx) => {
   // TODO: 从请求体中取出用户名校验用户名和密码
   // 借助 koa-body 解析body参数
   const { name, password } = ctx.request.body;
-  const statement = `SELECT * FROM user WHERE name='${name}' AND password='${password}'`;
+  const statement = `SELECT * FROM users WHERE name='${name}' AND password='${password}'`;
   const result = await runSqlStatement(statement);
   console.log(result);
 
@@ -90,7 +100,7 @@ const getOwnerInfo = async (ctx) => {
   const { id } = ctx.state.user;
   // 查数据库找用户详细信息
 
-  const statement = `SELECT * FROM user WHERE id='${id}'`;
+  const statement = `SELECT * FROM users WHERE id='${id}'`;
   const result = await runSqlStatement(statement);
 
   if (!result.length) {

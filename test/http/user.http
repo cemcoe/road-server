@@ -12,7 +12,7 @@ POST {{host}}/v1/user
 content-type: application/json
 
 {
-  "name": "cemco1",
+  "name": "cemco11",
   "password": "1234"
 }
 
