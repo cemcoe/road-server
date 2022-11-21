@@ -40,7 +40,7 @@ router.get("/v1/users", getUsersList);
 router.post("/v1/posts", auth, createPost);
 
 // 更新文章
-router.put("/v1/posts/:pid", updatePost);
+router.patch("/v1/posts/:pid", updatePost);
 
 // 获取文章列表
 router.get("/v1/posts", getPostList);
