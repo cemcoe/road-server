@@ -112,7 +112,7 @@ const getPostList = async (ctx) => {
 
   // 连表查询将用户id对应到用户名
   const statement = `
-  SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
+  SELECT p.id, p.author_id, p.title, p.abstract, p.content, p.created_at, p.updated_at, u.name, u.avatar
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id 
@@ -124,6 +124,8 @@ const getPostList = async (ctx) => {
   // format posts {...} => {..., author: {...}}
   // 这个需求是不是MySQL就可以做？
 
+  // 根据文章内容生成imgsLiast
+
   const result = posts.map((item) => {
     const { author_id, name, avatar } = item;
     const author = {
@@ -132,14 +134,26 @@ const getPostList = async (ctx) => {
       avatar,
     };
 
-    const { id, title, abstract, created_at, updated_at } = item;
+    const { id, title, abstract, content, created_at, updated_at } = item;
+
+    // gen imgsLink
+
+    // 获取文章中图片列表
+    const imgRe =
+      /(https?:[^:<>"]*\/)([^:<>"]*)(\.((png!thumbnail)|(png)|(jpg)|(webp)))/g;
+    let imgsLink = [];
+    // 默认图片列表为空，如果在文章中找到图片则更新图片列表
+    if (imgRe.test(content)) {
+      imgsLink = content.match(imgRe);
+    }
+
     const post = {
       id,
       title,
       abstract,
       commentcount: 0,
       viewcount: 0,
-      imgsLink: [],
+      imgsLink,
       status: 0,
       wordcount: 0,
       created_at,
