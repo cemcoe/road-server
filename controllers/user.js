@@ -1,4 +1,4 @@
-const { runSqlStatement } = require("../mysql/index.js");
+import { runSqlStatement } from "../mysql/index.js";
 
 // 获取用户列表
 const getUsersList = async (ctx) => {
@@ -99,8 +99,4 @@ const getUserPostList = async (ctx) => {
   }
 };
 
-module.exports = {
-  getUsersList,
-  getUserDetail,
-  getUserPostList,
-};
+export { getUsersList, getUserDetail, getUserPostList };

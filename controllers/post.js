@@ -1,5 +1,5 @@
-const { runSqlStatement } = require("../mysql/index.js");
-const mysql = require("mysql");
+import mysql from "mysql";
+import { runSqlStatement } from "../mysql/index.js";
 
 const createPost = async (ctx) => {
   // console.log(ctx.request.body)
@@ -217,9 +217,4 @@ const getPostDetail = async (ctx) => {
   };
 };
 
-module.exports = {
-  createPost,
-  getPostList,
-  getPostDetail,
-  updatePost,
-};
+export { createPost, getPostList, getPostDetail, updatePost };

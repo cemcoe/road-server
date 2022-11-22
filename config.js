@@ -9,8 +9,4 @@ const sqlConnectionStr = {
 
 const secret = "1111"; // jwt 密钥
 
-module.exports = {
-  PORT,
-  sqlConnectionStr,
-  secret,
-};
+export { PORT, sqlConnectionStr, secret };

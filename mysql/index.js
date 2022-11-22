@@ -1,5 +1,6 @@
-const mysql = require("mysql");
-const { sqlConnectionStr } = require("../config");
+import mysql from "mysql";
+import { sqlConnectionStr } from "../config.js";
+
 const connection = mysql.createConnection(sqlConnectionStr);
 
 const runSqlStatement = (statement) => {
@@ -28,6 +29,4 @@ const runSqlStatement = (statement) => {
   });
 };
 
-module.exports = {
-  runSqlStatement,
-};
+export { runSqlStatement };

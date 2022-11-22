@@ -1,25 +1,24 @@
-const Router = require("koa-router");
-const router = new Router();
-const jwt = require("koa-jwt");
-const { secret } = require("../config");
+import Router from "koa-router";
+import jwt from "koa-jwt";
+import { secret } from "../config.js";
 
-const { create, login, getOwnerInfo } = require("../controllers/login.js");
-
-const {
+import { create, login, getOwnerInfo } from "../controllers/login.js";
+import {
   getUsersList,
   getUserDetail,
   getUserPostList,
-} = require("../controllers/user.js");
-
-const {
+} from "../controllers/user.js";
+import {
   createPost,
   getPostList,
   getPostDetail,
   updatePost,
-} = require("../controllers/post.js");
+} from "../controllers/post.js";
+
+const router = new Router();
 
 router.get("/", (ctx) => {
-  ctx.body = "Welcome use xbook api!";
+  ctx.body = "Welcome to use xbook api!";
 });
 
 // 用户注册
@@ -54,4 +53,4 @@ router.get("/v1/users/:uid", getUserDetail);
 // 获取用户文章列表
 router.get("/v1/users/:uid/posts", getUserPostList);
 
-module.exports = router;
+export { router };

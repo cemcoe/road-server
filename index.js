@@ -1,49 +1,42 @@
-const Koa = require('koa');
-const app = new Koa();
-// 解析post body
-const koaBody = require('koa-body');
-// const Router = require('koa-router');
-// var router = new Router();
-const router = require('./routes')
-const { PORT } = require('./config')
+import Koa from "koa";
+import koaBody from "koa-body"; // 解析post body
+import { router } from "./routes/index.js";
+import { PORT } from "./config.js";
 
-// router.get('/', (ctx, next) => {
-//   ctx.body = '/';
-// });
+const app = new Koa();
 
 // 跨域问题
 app.use(async (ctx, next) => {
   // log request URL:
   ctx.set("Access-Control-Allow-Origin", "*");
-  ctx.set("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
+  ctx.set(
+    "Access-Control-Allow-Methods",
+    "POST, GET, PUT, OPTIONS, DELETE, PATCH"
+  );
   ctx.set("Access-Control-Max-Age", "3600");
-  ctx.set("Access-Control-Allow-Headers", "x-requested-with,Authorization,Content-Type,Accept");
+  ctx.set(
+    "Access-Control-Allow-Headers",
+    "x-requested-with,Authorization,Content-Type,Accept"
+  );
   ctx.set("Access-Control-Allow-Credentials", "true");
   if (ctx.request.method == "OPTIONS") {
-    ctx.response.status = 200
+    ctx.response.status = 200;
   }
   console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
   try {
     await next();
-    console.log('handler通过')
+    console.log("handler通过");
   } catch (err) {
-    console.log('handler处理错误')
+    console.log("handler处理错误");
     ctx.response.status = err.statusCode || err.status || 500;
     ctx.response.body = {
-      message: err.message
+      message: err.message,
     };
   }
 });
 
-// 放在router前面
-app.use(koaBody({}));
-
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
-
-// const PORT = 3001
+app.use(koaBody({})).use(router.routes()).use(router.allowedMethods());
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

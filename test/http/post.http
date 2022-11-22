@@ -16,7 +16,7 @@ content-type: application/json
 ###
 
 # 获取文章详细内容
-GET {{host}}/v1/post/106
+GET {{host}}/v1/posts/107
 content-type: application/json
 
 

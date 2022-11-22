@@ -1,6 +1,6 @@
-const { runSqlStatement } = require("../mysql/index.js");
-const jsonwebtoken = require("jsonwebtoken");
-const { secret } = require("../config");
+import { runSqlStatement } from "../mysql/index.js";
+import jsonwebtoken from "jsonwebtoken";
+import { secret } from "../config.js";
 
 // 用户注册
 async function create(ctx) {
@@ -110,8 +110,4 @@ async function getOwnerInfo(ctx) {
   };
 }
 
-module.exports = {
-  create,
-  login,
-  getOwnerInfo,
-};
+export { create, login, getOwnerInfo };
