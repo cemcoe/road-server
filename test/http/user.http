@@ -10,13 +10,13 @@ GET {{host}}/v1/users
 ###
 
 # 获取用户详情
-GET {{host}}/v1/user/101
+GET {{host}}/v1/users/101
 content-type: application/json
 
 ###
 
 # 获取用户文章列表
-GET {{host}}/v1/user/100/posts
+GET {{host}}/v1/users/106/posts
 content-type: application/json
 
 ###
