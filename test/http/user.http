@@ -21,6 +21,10 @@ content-type: application/json
 
 ###
 
+# 获取用户SBT
+GET {{host}}/v1/address/sbts
+content-type: application/json
+
 
 
 

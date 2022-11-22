@@ -15,6 +15,8 @@ import {
   updatePost,
 } from "../controllers/post.js";
 
+import { getSBTlist } from "../controllers/nft.js";
+
 const router = new Router();
 
 router.get("/", (ctx) => {
@@ -52,5 +54,9 @@ router.get("/v1/users/:uid", getUserDetail);
 
 // 获取用户文章列表
 router.get("/v1/users/:uid/posts", getUserPostList);
+
+// 获取用户SBT
+router.get("/v1/address/sbts", getSBTlist);
+router.get("/v1/address/:address/sbts", getSBTlist);
 
 export { router };
