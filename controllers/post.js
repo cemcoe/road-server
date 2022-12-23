@@ -118,7 +118,16 @@ const getPostList = async (ctx) => {
   WHERE p.author_id = u.id 
   limit ${m}, ${n};`;
 
+  const statement2 = `
+  SELECT count(*) as total 
+  FROM posts p
+  INNER JOIN users u
+  WHERE p.author_id = u.id; 
+  `
+
   const posts = await runSqlStatement(statement);
+  const {total} = (await runSqlStatement(statement2))[0]
+
   // console.log(result)
 
   // format posts {...} => {..., author: {...}}
@@ -171,6 +180,9 @@ const getPostList = async (ctx) => {
       status: 200,
       data: {
         postList: result,
+        total,
+        page,
+        per_page
       },
     };
   }

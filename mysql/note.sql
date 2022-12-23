@@ -200,6 +200,8 @@ select * from users order by id desc;
 -- DQL4.1输出符合条件的条数
 -- 用户写的文章数
 select count(*) as postsCount from posts where author_id=100;
+SELECT ceil(count(*)/12) as postsCount FROM `posts`; -- 总页数
+
 -- DQL4.2输出符合条件的条目的id字段的和
 -- 用户写的文章字数总数
 -- 如何拿到varstring的长度？

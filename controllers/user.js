@@ -2,15 +2,29 @@ import { runSqlStatement } from "../mysql/index.js";
 
 // 获取用户列表
 const getUsersList = async (ctx) => {
+  let { per_page = 10 } = ctx.query;
+  let { page = 1 } = ctx.query;
+
+  page = Math.max(page * 1, 1);
+  per_page = Math.max(per_page * 1, 1);
+
+  const n = per_page;
+  const m = (page - 1) * n;
+
   // 查询用户列表
-  const statement = `SELECT * FROM users`;
+  const statement = `SELECT * FROM users limit ${m}, ${n};`;
   const result = await runSqlStatement(statement);
   console.log(result);
+  const statement2 = `SELECT count(*) as total FROM users;`;
+  const {total} =(await runSqlStatement(statement2))[0]
 
   ctx.body = {
     status: 200,
     data: {
       users: result,
+      total,
+      page,
+      per_page
     },
   };
 };
