@@ -126,7 +126,7 @@ const getPostList = async (ctx) => {
   `
 
   const posts = await runSqlStatement(statement);
-  const {total} = (await runSqlStatement(statement2))[0]
+  const { total } = (await runSqlStatement(statement2))[0]
 
   // console.log(result)
 
@@ -197,9 +197,10 @@ const getPostDetail = async (ctx) => {
   WHERE p.author_id = u.id AND p.id = ${pid};`;
 
   const post = await runSqlStatement(statement);
+  console.log(post, 'pppp')
 
   const result = post.map((item) => {
-    const { id, title, content } = item;
+    const { id, title, content, author_id } = item;
     const { name, avatar } = item;
 
     return {
@@ -207,7 +208,7 @@ const getPostDetail = async (ctx) => {
       title,
       content,
       author: {
-        id,
+        id: author_id,
         name,
         avatar,
       },
