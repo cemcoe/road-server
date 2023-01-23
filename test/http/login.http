@@ -4,7 +4,7 @@
 ###
 
 # 1. user register
-POST {{host}}/v1/user
+POST {{host}}/v1/users
 content-type: application/json
 
 {

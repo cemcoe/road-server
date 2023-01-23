@@ -10,7 +10,7 @@ GET {{host}}/v1/users
 ###
 
 # 获取用户详情
-GET {{host}}/v1/users/101
+GET {{host}}/v1/users/106
 content-type: application/json
 
 ###

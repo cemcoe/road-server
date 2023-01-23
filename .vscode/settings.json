@@ -3,7 +3,7 @@
     "$shared": {
       "version": "v1",
       "prodToken": "foo",
-      "nonProdToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2LCJuYW1lIjoidGVzdCIsImlhdCI6MTY2OTAxNDI3MSwiZXhwIjoxNjY5MTAwNjcxfQ.sWSaUyVsPyuCLoaPQ7KanU46IJBzSf8L5q3_VmaU1EQ"
+      "nonProdToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2LCJuYW1lIjoidGVzdCIsImlhdCI6MTY3NDM3MDM3MiwiZXhwIjoxNjc0NDU2NzcyfQ.eba49L3hqoCsb5cfBOexpKCzns0R2uTxOJ_ykVayhTE"
     },
     "local": {
       "host": "http://localhost:3001",

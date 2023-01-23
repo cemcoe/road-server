@@ -1,7 +1,7 @@
 {
-  "name": "bookbox-web-server",
+  "name": "road-server",
   "version": "0.0.1",
-  "description": "bookbox web client api server",
+  "description": "road web client api server",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cemcoe/bookbox-web-server.git"
+    "url": "git+https://github.com/cemcoe/road-server.git"
   },
   "keywords": [
     "api"
@@ -18,9 +18,9 @@
   "author": "cemcoe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cemcoe/bookbox-web-server/issues"
+    "url": "https://github.com/cemcoe/road-server/issues"
   },
-  "homepage": "https://github.com/cemcoe/bookbox-web-server#readme",
+  "homepage": "https://github.com/cemcoe/road-server#readme",
   "dependencies": {
     "alchemy-sdk": "^2.2.3",
     "koa": "^2.13.4",

@@ -17,7 +17,7 @@
 show databases;
 
 -- DDL1.2创建数据库
-create database if not exists xbook;
+create database if not exists road;
 
 -- DDL1.3切换操作数据库
 use xbook;
