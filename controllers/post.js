@@ -116,6 +116,7 @@ const getPostList = async (ctx) => {
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id 
+  ORDER BY p.updated_at
   limit ${m}, ${n};`;
 
   const statement2 = `

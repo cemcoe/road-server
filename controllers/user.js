@@ -12,11 +12,11 @@ const getUsersList = async (ctx) => {
   const m = (page - 1) * n;
 
   // 查询用户列表
-  const statement = `SELECT * FROM users limit ${m}, ${n};`;
+  const statement = `SELECT * FROM users ORDER BY updated_at limit ${m}, ${n};`;
   const result = await runSqlStatement(statement);
   console.log(result);
   const statement2 = `SELECT count(*) as total FROM users;`;
-  const {total} =(await runSqlStatement(statement2))[0]
+  const { total } = (await runSqlStatement(statement2))[0]
 
   ctx.body = {
     status: 200,
