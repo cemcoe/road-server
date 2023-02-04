@@ -17,6 +17,9 @@ import {
 
 import { getSBTlist } from "../controllers/nft.js";
 
+import { upload } from "../controllers/file.js";
+
+
 const router = new Router();
 
 router.get("/", (ctx) => {
@@ -58,5 +61,9 @@ router.get("/v1/users/:uid/posts", getUserPostList);
 // 获取用户SBT
 router.get("/v1/address/sbts", getSBTlist);
 router.get("/v1/address/:address/sbts", getSBTlist);
+
+// 上传图片
+router.post("/v1/upload", upload);
+
 
 export { router };

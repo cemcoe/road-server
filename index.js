@@ -35,7 +35,12 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(koaBody({})).use(router.routes()).use(router.allowedMethods());
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    maxFileSize: 200 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
+  }
+})).use(router.routes()).use(router.allowedMethods());
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
