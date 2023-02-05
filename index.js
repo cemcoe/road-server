@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Koa from "koa";
 import koaBody from "koa-body"; // 解析post body
-import koaStatic from 'koa-static' // 静态服务
+import serve from "koa-static"; // 静态服务
 
 import { router } from "./routes/index.js";
 import { PORT } from "./config.js";
@@ -43,13 +43,17 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(koaStatic(path.join(__dirname, 'public')))
+
+const staticPath = path.join(__dirname, './static')
+console.log(staticPath)
+
+app.use(serve(staticPath))
 
 app.use(koaBody({
   multipart: true, // 支持多文件上传
   encoding: "gzip", // 编码格式
   formidable: {
-    uploadDir: path.join(__dirname, '/public/uploads'), // 设置文件上传目录
+    uploadDir: staticPath, // 设置文件上传目录
     keepExtensions: true, // 保持文件的后缀
     maxFileSize: 200 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
   }
