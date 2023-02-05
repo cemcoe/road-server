@@ -1,7 +1,15 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Koa from "koa";
 import koaBody from "koa-body"; // 解析post body
+import koaStatic from 'koa-static' // 静态服务
+
 import { router } from "./routes/index.js";
 import { PORT } from "./config.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = new Koa();
 
@@ -35,9 +43,14 @@ app.use(async (ctx, next) => {
   }
 });
 
+app.use(koaStatic(path.join(__dirname, 'public')))
+
 app.use(koaBody({
-  multipart: true,
+  multipart: true, // 支持多文件上传
+  encoding: "gzip", // 编码格式
   formidable: {
+    uploadDir: path.join(__dirname, '/public/uploads'), // 设置文件上传目录
+    keepExtensions: true, // 保持文件的后缀
     maxFileSize: 200 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
   }
 })).use(router.routes()).use(router.allowedMethods());
