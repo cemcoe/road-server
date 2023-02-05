@@ -44,9 +44,11 @@ app.use(async (ctx, next) => {
 });
 
 
-const staticPath = path.join(__dirname, './static')
+const staticPath = path.join(__dirname, './static/uploads')
 console.log(staticPath)
 
+// $ 这个一定要加，没有后面会404
+app.use(serve("."));
 app.use(serve(staticPath))
 
 app.use(koaBody({
