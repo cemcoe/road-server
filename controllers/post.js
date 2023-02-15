@@ -1,4 +1,5 @@
 import mysql from "mysql";
+import { marked } from 'marked';
 import { runSqlStatement } from "../mysql/index.js";
 
 const createPost = async (ctx) => {
@@ -13,6 +14,7 @@ const createPost = async (ctx) => {
   // 当要提取的对象对应属性解析为 undefined，变量就被赋予默认值。前端可能传过来空字符串
   // TODO: 生成摘要等，丰富文章信息
   const { content } = ctx.request.body;
+  const htmlContent = marked.parse(content)
   const title = ctx.request.body.title || "默认标题";
   const abstract = ctx.request.body.abstract || content.slice(0, 100);
 
@@ -20,8 +22,9 @@ const createPost = async (ctx) => {
   // const abstract = content.slice(0, 20)
 
   const mysqlContent = mysql.escape(`${content}`); // 转义特殊字符，插入数据库
+  const mysqlHtmlContent = mysql.escape(`${htmlContent}`)
 
-  const statement = `INSERT INTO posts(title, author_id, content, abstract, created_at, updated_at) VALUES('${title}', '${id}', ${mysqlContent}, '${abstract}', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());`;
+  const statement = `INSERT INTO posts(title, author_id, content, content_html, abstract, created_at, updated_at) VALUES('${title}', '${id}', ${mysqlContent},${mysqlHtmlContent}, '${abstract}', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());`;
   const result = await runSqlStatement(statement);
   console.log("--", result, "--");
 
@@ -31,6 +34,7 @@ const createPost = async (ctx) => {
       status: 200,
       data: {
         insertId,
+        htmlContent
       },
     };
   }
@@ -192,7 +196,7 @@ const getPostList = async (ctx) => {
 const getPostDetail = async (ctx) => {
   const pid = ctx.params.id;
   const statement = `
-  SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.content
+  SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.content, p.content_html
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id AND p.id = ${pid};`;
@@ -201,13 +205,14 @@ const getPostDetail = async (ctx) => {
   console.log(post, 'pppp')
 
   const result = post.map((item) => {
-    const { id, title, content, author_id } = item;
+    const { id, title, content, author_id, content_html } = item;
     const { name, avatar } = item;
 
     return {
       id,
       title,
       content,
+      content_html,
       author: {
         id: author_id,
         name,
