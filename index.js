@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Koa from "koa";
+import cors from '@koa/cors';
 import koaBody from "koa-body"; // 解析post body
 import serve from "koa-static"; // 静态服务
 
@@ -14,34 +15,35 @@ const __dirname = path.dirname(__filename);
 const app = new Koa();
 
 // 跨域问题
-app.use(async (ctx, next) => {
-  // log request URL:
-  ctx.set("Access-Control-Allow-Origin", "*");
-  ctx.set(
-    "Access-Control-Allow-Methods",
-    "POST, GET, PUT, OPTIONS, DELETE, PATCH"
-  );
-  ctx.set("Access-Control-Max-Age", "3600");
-  ctx.set(
-    "Access-Control-Allow-Headers",
-    "x-requested-with,Authorization,Content-Type,Accept"
-  );
-  ctx.set("Access-Control-Allow-Credentials", "true");
-  if (ctx.request.method == "OPTIONS") {
-    ctx.response.status = 200;
-  }
-  console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
-  try {
-    await next();
-    console.log("handler通过");
-  } catch (err) {
-    console.log("handler处理错误");
-    ctx.response.status = err.statusCode || err.status || 500;
-    ctx.response.body = {
-      message: err.message,
-    };
-  }
-});
+// app.use(async (ctx, next) => {
+//   // log request URL:
+//   ctx.set("Access-Control-Allow-Origin", "*");
+//   ctx.set(
+//     "Access-Control-Allow-Methods",
+//     "POST, GET, PUT, OPTIONS, DELETE, PATCH"
+//   );
+//   ctx.set("Access-Control-Max-Age", "3600");
+//   ctx.set(
+//     "Access-Control-Allow-Headers",
+//     "x-requested-with,Authorization,Content-Type,Accept"
+//   );
+//   ctx.set("Access-Control-Allow-Credentials", "true");
+//   if (ctx.request.method == "OPTIONS") {
+//     ctx.response.status = 200;
+//   }
+//   console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
+//   try {
+//     await next();
+//     console.log("handler通过");
+//   } catch (err) {
+//     console.log("handler处理错误");
+//     ctx.response.status = err.statusCode || err.status || 500;
+//     ctx.response.body = {
+//       message: err.message,
+//     };
+//   }
+// });
+app.use(cors())
 
 
 const staticPath = path.join(__dirname, './static/uploads')
