@@ -53,7 +53,7 @@ app.use(serve(staticPath))
 
 app.use(koaBody({
   multipart: true, // 支持多文件上传
-  encoding: "gzip", // 编码格式
+  // encoding: "gzip", // 编码格式
   formidable: {
     uploadDir: staticPath, // 设置文件上传目录
     keepExtensions: true, // 保持文件的后缀
