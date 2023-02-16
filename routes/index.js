@@ -15,6 +15,10 @@ import {
   updatePost,
 } from "../controllers/post.js";
 
+import {
+  getSerialPostList
+} from "../controllers/serial.js";
+
 import { getSBTlist } from "../controllers/nft.js";
 
 import { upload } from "../controllers/file.js";
@@ -66,6 +70,10 @@ router.get("/v1/users/:uid/posts", getUserPostList);
 // 获取用户SBT
 router.get("/v1/address/sbts", getSBTlist);
 router.get("/v1/address/:address/sbts", getSBTlist);
+
+// 获取连载文章列表
+router.get("/v1/serial/:id", getSerialPostList);
+
 
 // 上传图片
 router.post("/v1/upload", upload);
