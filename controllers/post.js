@@ -196,10 +196,10 @@ const getPostList = async (ctx) => {
 };
 
 const getPostDetail = async (ctx) => {
-  const id = ctx?.state?.user?.id;
-  console.log(id)
+  const uid = ctx?.state?.user?.id;
 
-  const isOwner = id ? true : false
+
+
 
 
 
@@ -216,6 +216,7 @@ const getPostDetail = async (ctx) => {
   const result = post.map((item) => {
     const { id, title, content, author_id, content_html, status } = item;
     const { name, avatar } = item;
+    const isOwner = uid === author_id ? true : false
 
     return {
       id,
