@@ -196,7 +196,7 @@ const getPostList = async (ctx) => {
 const getPostDetail = async (ctx) => {
   const pid = ctx.params.id;
   const statement = `
-  SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.content, p.content_html
+  SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.status, p.content, p.content_html
   FROM posts p
   INNER JOIN users u
   WHERE p.author_id = u.id AND p.id = ${pid};`;
@@ -205,13 +205,14 @@ const getPostDetail = async (ctx) => {
   console.log(post, 'pppp')
 
   const result = post.map((item) => {
-    const { id, title, content, author_id, content_html } = item;
+    const { id, title, content, author_id, content_html, status } = item;
     const { name, avatar } = item;
 
     return {
       id,
       title,
       content,
+      status,
       content_html,
       author: {
         id: author_id,

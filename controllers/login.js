@@ -119,7 +119,7 @@ const getOwnerPostList = async (ctx) => {
 
   // 连表查询将用户id对应到用户名
   let statement = `
-    SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
+    SELECT p.id, p.author_id, p.title, p.abstract, p.status, p.created_at, p.updated_at, u.name, u.avatar
     FROM posts p
     INNER JOIN users u
     WHERE p.author_id = u.id AND p.author_id = ${uid}
@@ -128,7 +128,7 @@ const getOwnerPostList = async (ctx) => {
 
   if (status === 'private') {
     statement = `
-    SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
+    SELECT p.id, p.author_id, p.title, p.abstract, p.status, p.created_at, p.updated_at, u.name, u.avatar
     FROM posts p
     INNER JOIN users u
     WHERE p.author_id = u.id AND p.author_id = ${uid} AND status = 0
@@ -153,7 +153,7 @@ const getOwnerPostList = async (ctx) => {
       avatar,
     };
 
-    const { id, title, abstract, created_at, updated_at } = item;
+    const { id, title, abstract, created_at, updated_at, status } = item;
     const post = {
       id,
       title,
@@ -161,7 +161,7 @@ const getOwnerPostList = async (ctx) => {
       commentcount: 0,
       viewcount: 0,
       imgsLink: [],
-      status: 0,
+      status,
       wordcount: 0,
       created_at,
       updated_at,
