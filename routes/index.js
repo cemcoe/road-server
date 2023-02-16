@@ -2,7 +2,7 @@ import Router from "koa-router";
 import jwt from "koa-jwt";
 import { secret } from "../config.js";
 
-import { create, login, getOwnerInfo } from "../controllers/login.js";
+import { create, login, getOwnerInfo, getOwnerPostList } from "../controllers/login.js";
 import {
   getUsersList,
   getUserDetail,
@@ -33,6 +33,9 @@ router.post("/v1/login", login);
 const auth = jwt({ secret });
 // 获取登录用户信息
 router.get("/v1/owner", auth, getOwnerInfo);
+// 获取登录用户文章列表
+router.get("/v1/owner/posts", auth, getOwnerPostList);
+
 
 // ---------------
 

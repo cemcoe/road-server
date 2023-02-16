@@ -61,7 +61,7 @@ const getUserPostList = async (ctx) => {
     SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
     FROM posts p
     INNER JOIN users u
-    WHERE p.author_id = u.id AND p.author_id = ${uid}
+    WHERE p.author_id = u.id AND p.author_id = ${uid} AND p.status = 1
     ORDER BY p.updated_at DESC
     limit ${0}, ${20};`;
 

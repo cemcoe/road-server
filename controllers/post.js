@@ -119,7 +119,7 @@ const getPostList = async (ctx) => {
   SELECT p.id, p.author_id, p.title, p.abstract, p.content, p.created_at, p.updated_at, u.name, u.avatar
   FROM posts p
   INNER JOIN users u
-  WHERE p.author_id = u.id 
+  WHERE p.author_id = u.id AND p.status = 1
   ORDER BY p.updated_at DESC
   limit ${m}, ${n};`;
 
@@ -127,7 +127,7 @@ const getPostList = async (ctx) => {
   SELECT count(*) as total 
   FROM posts p
   INNER JOIN users u
-  WHERE p.author_id = u.id; 
+  WHERE p.author_id = u.id AND p.status = 1; 
   `
 
   const posts = await runSqlStatement(statement);

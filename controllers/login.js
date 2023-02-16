@@ -110,4 +110,61 @@ async function getOwnerInfo(ctx) {
   };
 }
 
-export { create, login, getOwnerInfo };
+const getOwnerPostList = async (ctx) => {
+
+  const uid = ctx.state.user.id;
+
+  // 连表查询将用户id对应到用户名
+  const statement = `
+    SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
+    FROM posts p
+    INNER JOIN users u
+    WHERE p.author_id = u.id AND p.author_id = ${uid}
+    ORDER BY p.updated_at DESC
+    limit ${0}, ${20};`;
+
+  const posts = await runSqlStatement(statement);
+  // console.log(result)
+
+  // format posts {...} => {..., author: {...}}
+  // 这个需求是不是MySQL就可以做？
+
+  const result = posts.map((item) => {
+    const { author_id, name, avatar } = item;
+    const author = {
+      id: author_id,
+      name,
+      avatar,
+    };
+
+    const { id, title, abstract, created_at, updated_at } = item;
+    const post = {
+      id,
+      title,
+      abstract,
+      commentcount: 0,
+      viewcount: 0,
+      imgsLink: [],
+      status: 0,
+      wordcount: 0,
+      created_at,
+      updated_at,
+    };
+
+    return {
+      ...post,
+      author,
+    };
+  });
+
+  if (result) {
+    ctx.body = {
+      status: 200,
+      data: {
+        postList: result,
+      },
+    };
+  }
+};
+
+export { create, login, getOwnerInfo, getOwnerPostList };
