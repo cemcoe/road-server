@@ -56,17 +56,13 @@ const getUserDetail = async (ctx) => {
 const getUserPostList = async (ctx) => {
   const { uid } = ctx.params;
 
-  // const statement = `
-  // SELECT p.id, p.title, p.abstract
-  // FROM posts p
-  // WHERE p.author_id = ${uid};`;
-
   // 连表查询将用户id对应到用户名
   const statement = `
     SELECT p.id, p.author_id, p.title, p.abstract, p.created_at, p.updated_at, u.name, u.avatar
     FROM posts p
     INNER JOIN users u
     WHERE p.author_id = u.id AND p.author_id = ${uid}
+    ORDER BY p.updated_at DESC
     limit ${0}, ${20};`;
 
   const posts = await runSqlStatement(statement);
