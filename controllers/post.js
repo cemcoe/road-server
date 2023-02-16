@@ -196,6 +196,13 @@ const getPostList = async (ctx) => {
 };
 
 const getPostDetail = async (ctx) => {
+  const id = ctx?.state?.user?.id;
+  console.log(id)
+
+  const isOwner = id ? true : false
+
+
+
   const pid = ctx.params.id;
   const statement = `
   SELECT p.id, p.author_id, u.name, avatar, p.title, p.abstract, p.status, p.content, p.content_html
@@ -204,7 +211,7 @@ const getPostDetail = async (ctx) => {
   WHERE p.author_id = u.id AND p.id = ${pid};`;
 
   const post = await runSqlStatement(statement);
-  console.log(post, 'pppp')
+
 
   const result = post.map((item) => {
     const { id, title, content, author_id, content_html, status } = item;
@@ -216,6 +223,7 @@ const getPostDetail = async (ctx) => {
       content,
       status,
       content_html,
+      isOwner,
       author: {
         id: author_id,
         name,

@@ -21,6 +21,8 @@ import { upload } from "../controllers/file.js";
 
 
 const router = new Router();
+const auth = jwt({ secret });
+const auth_info = jwt({ secret, passthrough: true })
 
 router.get("/", (ctx) => {
   ctx.body = "Welcome to use xbook api!";
@@ -30,7 +32,7 @@ router.get("/", (ctx) => {
 router.post("/v1/users", create);
 // 用户登录
 router.post("/v1/login", login);
-const auth = jwt({ secret });
+
 // 获取登录用户信息
 router.get("/v1/owner", auth, getOwnerInfo);
 // 获取登录用户文章列表
@@ -53,7 +55,7 @@ router.patch("/v1/posts/:pid", updatePost);
 router.get("/v1/posts", getPostList);
 
 // 获取文章详情
-router.get("/v1/posts/:id", getPostDetail);
+router.get("/v1/posts/:id", auth_info, getPostDetail);
 
 // 获取用户详情
 router.get("/v1/users/:uid", getUserDetail);
