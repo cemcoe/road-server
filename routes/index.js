@@ -23,6 +23,10 @@ import { getSBTlist } from "../controllers/nft.js";
 
 import { upload } from "../controllers/file.js";
 
+import {
+  getAppInfo
+} from "../controllers/app.js";
+
 
 const router = new Router();
 const auth = jwt({ secret });
@@ -77,6 +81,9 @@ router.get("/v1/serial/:id", getSerialPostList);
 
 // 上传图片
 router.post("/v1/upload", upload);
+
+// 获取下载信息
+router.get("/v1/app", getAppInfo);
 
 
 export { router };
