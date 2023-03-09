@@ -7,7 +7,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-esm ./src/index.ts",
-    "dev:socket": "ts-node-esm ./src/socket/index.ts",
     "build": "tsc",
     "preview": "node ./dist/index.js"
   },
