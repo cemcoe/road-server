@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>socket</title>
+  </head>
+  <body>
+    <script type="module">
+      import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+
+      const socket = io("http://127.0.0.1:3000", {
+        reconnectionDelayMax: 10000,
+        auth: {
+          token: "123",
+        },
+        query: {
+          "my-key": "my-value",
+        },
+      });
+
+      // client-side
+      socket.on("connect", () => {
+        console.log(socket.id);
+      });
+
+      socket.on("login", (...args) => {
+        console.log("登录成功", JSON.stringify(args));
+      });
+
+      socket.on("msg", (...args) => {
+        console.log(args[0].msg);
+        // ...
+      });
+    </script>
+  </body>
+</html>
