@@ -1,8 +1,9 @@
+import { Context } from 'koa'
 import mysql from "mysql";
 import { marked } from 'marked';
 import { runSqlStatement } from "../mysql/index.js";
 
-const createPost = async (ctx) => {
+const createPost = async (ctx: Context) => {
   // console.log(ctx.request.body)
   // TODO: 从请求体中取出用户名校验用户名和密码
   // 借助 koa-body 解析body参数
@@ -41,7 +42,7 @@ const createPost = async (ctx) => {
 };
 
 // 更新文章
-const updatePost = async (ctx) => {
+const updatePost = async (ctx: Context) => {
   // TODO: 拿到登录用户的id，判断登录用户id和文章对应的作者id是否一致
   // const { id } = ctx.state.user
   const { pid } = ctx.params;
@@ -96,7 +97,7 @@ const updatePost = async (ctx) => {
 };
 
 // 获取文章列表
-const getPostList = async (ctx) => {
+const getPostList = async (ctx: Context) => {
   // 默认每页展示10篇文章
   // 可以提供参数每页多少个以及页数以及关键字
 
@@ -110,7 +111,9 @@ const getPostList = async (ctx) => {
   let { per_page = 10 } = ctx.query;
   let { page = 1 } = ctx.query;
 
+  // @ts-ignore
   page = Math.max(page * 1, 1);
+  // @ts-ignore
   per_page = Math.max(per_page * 1, 1);
 
   const n = per_page;
@@ -142,7 +145,7 @@ const getPostList = async (ctx) => {
 
   // 根据文章内容生成imgsLiast
 
-  const result = posts.map((item) => {
+  const result = posts.map((item: any) => {
     const { author_id, name, avatar } = item;
     const author = {
       id: author_id,
@@ -195,7 +198,7 @@ const getPostList = async (ctx) => {
   }
 };
 
-const getPostDetail = async (ctx) => {
+const getPostDetail = async (ctx: Context) => {
   const uid = ctx?.state?.user?.id;
 
 
@@ -213,7 +216,7 @@ const getPostDetail = async (ctx) => {
   const post = await runSqlStatement(statement);
 
 
-  const result = post.map((item) => {
+  const result = post.map((item: any) => {
     const { id, title, content, author_id, content_html, status } = item;
     const { name, avatar } = item;
     const isOwner = uid === author_id ? true : false

@@ -1,14 +1,16 @@
 
+import { Context } from 'koa'
 import { runSqlStatement } from "../mysql/index.js";
 
 // 获取连载文章列表
-const getSerialPostList = async (ctx) => {
+const getSerialPostList = async (ctx: Context) => {
   const serialId = ctx.params.id
 
   let { per_page = 10 } = ctx.query;
   let { page = 1 } = ctx.query;
-
+  // @ts-ignore
   page = Math.max(page * 1, 1);
+  // @ts-ignore
   per_page = Math.max(per_page * 1, 1);
 
   const n = per_page;
@@ -41,7 +43,7 @@ const getSerialPostList = async (ctx) => {
 
   // 根据文章内容生成imgsLiast
 
-  const result = posts.map((item) => {
+  const result = posts.map((item: any) => {
     const { author_id, name, avatar } = item;
     const author = {
       id: author_id,

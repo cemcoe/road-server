@@ -1,11 +1,14 @@
+import { Context } from 'koa'
 import { runSqlStatement } from "../mysql/index.js";
 
 // 获取用户列表
-const getUsersList = async (ctx) => {
+const getUsersList = async (ctx: Context) => {
   let { per_page = 10 } = ctx.query;
   let { page = 1 } = ctx.query;
 
+  // @ts-ignore
   page = Math.max(page * 1, 1);
+  // @ts-ignore
   per_page = Math.max(per_page * 1, 1);
 
   const n = per_page;
@@ -29,7 +32,7 @@ const getUsersList = async (ctx) => {
   };
 };
 
-const getUserDetail = async (ctx) => {
+const getUserDetail = async (ctx: Context) => {
   const { uid } = ctx.params;
   const statement = `
   SELECT *
@@ -53,7 +56,7 @@ const getUserDetail = async (ctx) => {
   };
 };
 
-const getUserPostList = async (ctx) => {
+const getUserPostList = async (ctx: Context) => {
   const { uid } = ctx.params;
 
   // 连表查询将用户id对应到用户名
@@ -71,7 +74,7 @@ const getUserPostList = async (ctx) => {
   // format posts {...} => {..., author: {...}}
   // 这个需求是不是MySQL就可以做？
 
-  const result = posts.map((item) => {
+  const result = posts.map((item: any) => {
     const { author_id, name, avatar } = item;
     const author = {
       id: author_id,

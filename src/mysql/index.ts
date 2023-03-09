@@ -3,9 +3,9 @@ import { sqlConnectionStr } from "../config.js";
 
 const connection = mysql.createConnection(sqlConnectionStr);
 
-const runSqlStatement = (statement) => {
+const runSqlStatement = (statement: string) => {
   console.log("TODO: statement 语句校验");
-  return new Promise((resolve, reject) => {
+  return new Promise<any>((resolve, reject) => {
     // Statement: 'SELECT * FROM user'
     connection.query(statement, (error, results, fields) => {
       // https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server

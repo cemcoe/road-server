@@ -4,7 +4,6 @@ import Koa from "koa";
 import cors from '@koa/cors';
 import koaBody from "koa-body"; // 解析post body
 import serve from "koa-static"; // 静态服务
-
 import { router } from "./routes/index.js";
 import { PORT } from "./config.js";
 

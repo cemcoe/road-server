@@ -1,7 +1,7 @@
-
+import { Context } from 'koa'
 import { runSqlStatement } from "../mysql/index.js";
 
-async function getAppInfo(ctx) {
+async function getAppInfo(ctx: Context) {
   // 查询用户列表
   const statement = `SELECT * FROM app ORDER BY create_at DESC;`;
   const result = await runSqlStatement(statement);

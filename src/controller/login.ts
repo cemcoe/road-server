@@ -1,9 +1,11 @@
-import { runSqlStatement } from "../mysql/index.js";
+import { Context } from 'koa'
 import jsonwebtoken from "jsonwebtoken";
+import { runSqlStatement } from "../mysql/index.js";
+import userService from "../service/userService.js";
 import { secret } from "../config.js";
 
 // 用户注册
-async function create(ctx) {
+async function create(ctx: Context) {
   const { name, password } = ctx.request.body;
 
   const statement = `SELECT * FROM users WHERE name='${name}'`;
@@ -48,40 +50,31 @@ async function create(ctx) {
 }
 
 // 用户登录
-async function login(ctx) {
-  console.log(ctx.request.body);
-  // TODO: 从请求体中取出用户名校验用户名和密码
-  // 借助 koa-body 解析body参数
+async function login(ctx: Context) {
   const { name, password } = ctx.request.body;
-  const statement = `SELECT * FROM users WHERE name='${name}' AND password='${password}'`;
-  const result = await runSqlStatement(statement);
-  console.log(result);
+  try {
+    const user = await userService.userLogin({ name, password })
+    const { id } = user
+    const token = jsonwebtoken.sign({ id, name }, secret, { expiresIn: "1d" });
+    ctx.body = {
+      status: 200,
+      data: {
+        token,
+        user,
+      }
+    };
 
-  if (!result.length) {
-    // TODO: 更加友好的返回码，该用户不存在，密码错误
-    // 没有匹配到对应的用户名和密码
+  } catch (error) {
+    // 异常可以细化
     ctx.body = {
       status: 401,
     };
     return;
   }
-  const { id } = result[0];
-  // console.log(id, name, result)
-  const token = jsonwebtoken.sign({ id, name }, secret, { expiresIn: "1d" });
-  // console.log(result, 'async')
-  // 登录成功返回token
-  ctx.body = {
-    // 匹配到了对应的用户名和密码
-    status: 200,
-    data: {
-      token,
-      user: result[0],
-    },
-  };
 }
 
 // 获取登录用户信息
-async function getOwnerInfo(ctx) {
+async function getOwnerInfo(ctx: Context) {
   // 拿到登录用户的id
   // console.log(ctx.state, 'state')
 
@@ -110,7 +103,7 @@ async function getOwnerInfo(ctx) {
   };
 }
 
-const getOwnerPostList = async (ctx) => {
+const getOwnerPostList = async (ctx: Context) => {
   const { status } = ctx.query;
 
 
@@ -145,7 +138,7 @@ const getOwnerPostList = async (ctx) => {
   // format posts {...} => {..., author: {...}}
   // 这个需求是不是MySQL就可以做？
 
-  const result = posts.map((item) => {
+  const result = posts.map((item: any) => {
     const { author_id, name, avatar } = item;
     const author = {
       id: author_id,

@@ -14,7 +14,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          # npm run-script build
+          npm run-script build
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@releases/v3
       #   with:
@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "."
+          source: "./dist/"
           target: "/root/workplace/road-server/"
           strip_components: 1
       - name: pm2 restart index
