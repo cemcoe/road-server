@@ -1,7 +1,10 @@
 import { createServer } from "http";
+import Koa from "koa";
 import { Server } from "socket.io";
 
-const httpServer = createServer();
+const app = new Koa();
+
+const httpServer = createServer(app.callback());
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
