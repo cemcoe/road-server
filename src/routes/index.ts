@@ -4,6 +4,7 @@ import { userRoutes } from "./userRoutes.js";
 import { postRoutes } from "./postRoutes.js";
 import { serialRoutes } from "./serialRoutes.js";
 import { systemRoutes } from "./systemRoutes.js";
+import { mercariRoutes } from "./mercariRoutes.js";
 
 const router = new Router();
 
@@ -16,5 +17,6 @@ userRoutes(router);
 postRoutes(router);
 serialRoutes(router);
 systemRoutes(router);
+mercariRoutes(router);
 
 export { router };

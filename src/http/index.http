@@ -1,0 +1,23 @@
+
+### 1. 获取商品列表 limit 默认为60，180会卡，设置为100最好
+https://api.mercari.jp/store/get_items?type=category&limit=100 HTTP/1.1
+accept: application/json, text/plain, */*
+accept-encoding: gzip, deflate, br
+accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+dnt: 1
+dpop: eyJ0eXAiOiJkcG9wK2p3dCIsImFsZyI6IkVTMjU2IiwiandrIjp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiM2lmcmo4S2NfUUVsU3FOVlRsRzZrY0NwNWRVS2xFWHRONzk3WGlYZEtQQSIsInkiOiJsVTJVMi1SLXFFdGI5SHhfLVItZUt4NTRWeC00R1J0VC1Pc2Jnd0FRck1vIn19.eyJpYXQiOjE2Nzg5NTY3MzksImp0aSI6ImQ4MWE3YzFhLTU5YTUtNGM5Mi04M2QyLTQ3MGEwYzUzOTExYyIsImh0dSI6Imh0dHBzOi8vYXBpLm1lcmNhcmkuanAvc3RvcmUvZ2V0X2l0ZW1zIiwiaHRtIjoiR0VUIiwidXVpZCI6IjNmNzJkZjJhLTczYTYtNDI1Ny05YTQ1LThiYmExNjZmMTdhYSJ9.YPOEZC3ueMmKIONfLQVbptc2S8m1xmtzdNCM9EePumjgsNWu_as8N6LonTofXMA9Sy2bzWzQ16WhDfw0WEcogA
+origin: https://jp.mercari.com
+referer: https://jp.mercari.com/
+sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+sec-fetch-dest: empty
+sec-fetch-mode: cors
+sec-fetch-site: cross-site
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36
+x-platform: web
+
+
+### 1. 获取商品列表 limit 默认为60，180会卡，设置为100最好
+
+http://127.0.0.1:3003/v2/items HTTP/1.1
