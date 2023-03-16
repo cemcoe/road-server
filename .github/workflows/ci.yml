@@ -39,5 +39,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/workplace/road-server/
+            cd /root/workplace/road-server/dist/
             pm2 restart index.js
