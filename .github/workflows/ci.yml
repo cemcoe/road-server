@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "./dist/"
+          source: "."
           target: "/root/workplace/road-server/"
           strip_components: 1
       - name: pm2 restart index
@@ -39,5 +39,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/workplace/road-server/dist/
-            pm2 restart index.js
+            cd /root/workplace/road-server
+            pm2 restart ./dist/index.js
