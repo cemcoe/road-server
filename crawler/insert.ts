@@ -1,5 +1,5 @@
 import { data } from "./data.js";
-import { runSqlStatement } from "../mysql/index.js";
+import { runSqlStatement } from "../src/mysql/index.js";
 
 function generateInsertStatement(data: any) {
   const tableName = "mercari";

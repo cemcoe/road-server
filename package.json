@@ -9,6 +9,7 @@
     "dev": "ts-node-esm ./src/index.ts",
     "insert": "ts-node-esm ./src/http/insert_items_get.ts",
     "sql": "ts-node-esm ./src/utils/sql.ts",
+    "crawler": "ts-node-esm ./crawler/index.ts",
     "build": "tsc",
     "preview": "node ./dist/index.js"
   },
@@ -28,6 +29,7 @@
   "dependencies": {
     "@koa/cors": "^4.0.0",
     "@types/koa": "^2.13.5",
+    "axios": "^1.3.4",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",
     "koa-jwt": "^4.0.3",
