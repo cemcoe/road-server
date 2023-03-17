@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["./src/**/*", "./crawler/**/*"],
+  "include": ["./src/**/*"],
   "compilerOptions": {
     "outDir": "./dist",
     "moduleResolution": "node",
