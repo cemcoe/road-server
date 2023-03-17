@@ -1,5 +1,5 @@
 import { runSqlStatement } from "../mysql/index.js";
-const BASE_COLUM_LIST = "id, name, phone, bio, avatar";
+const BASE_COLUM_LIST = "id, name, bio, avatar";
 
 const statement = (name: string, password: string) =>
   `SELECT ${BASE_COLUM_LIST} FROM users WHERE name='${name}' AND password='${password}'`;
