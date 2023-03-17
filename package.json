@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-esm ./src/index.ts",
-    "insert": "ts-node-esm ./src/http/insert_items_get.ts",
+    "insert": "ts-node-esm ./crawler/insert_items_get.ts",
     "sql": "ts-node-esm ./src/utils/sql.ts",
     "crawler": "ts-node-esm ./crawler/index.ts",
     "build": "tsc",

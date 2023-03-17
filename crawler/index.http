@@ -23,7 +23,7 @@ x-platform: web
 http://127.0.0.1:3003/v2/items HTTP/1.1
 
 ### 2. 获取商品详情
-https://api.mercari.jp/items/get?id=m88479087694
+https://api.mercari.jp/items/get?id=m17987627229
 # accept: application/json, text/plain, */*
 # accept-encoding: gzip, deflate, br
 # accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
