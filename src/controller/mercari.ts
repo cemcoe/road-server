@@ -24,4 +24,17 @@ async function getShopItems(ctx: Context) {
   };
 }
 
-export { getShopItems };
+async function getItemById(ctx: Context) {
+  const { id } = ctx.request.query;
+  // 查询用户列表
+  const result = await mercariMapper.queryMercariItemById(id as string);
+
+  ctx.body = {
+    status: 200,
+    data: {
+      shopItem: result,
+    },
+  };
+}
+
+export { getShopItems, getItemById };
